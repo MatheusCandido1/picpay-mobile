@@ -14,7 +14,7 @@ const items = [
     {
         key: 1,
         img: img1,
-        label: 'Doações'
+        label: 'Recarga'
     },
     {
         key: 2,
