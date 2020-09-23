@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { 
     Wrapper, 
@@ -14,27 +14,55 @@ import {
     Action,
     ActionLabel,
     UseBalance,
-    UseBalanceTitle
+    UseBalanceTitle,
+    PaymentMethods,
+    PaymentMethodsTitle,
+    Card,
+    CardDetails,
+    CardInfo,
+    CardTitle,
+    CardFooter,
+    Img,
+    CardBody,
+    CardFooterText,
+    TicketContainer,
+    Ticket,
+    TicketLabel
 } from './styles';
 
-import { Feather, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
+
+import creditCard from '../../assets/img/credit-card.png';
 
 import { Switch } from 'react-native';
 
 export default function Home() {
+    const [useBalance, setUseBalance] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+
+    function handleSwitch() {
+        setUseBalance(previousState => !previousState);
+    }
+
+    function handleBalanceVisibility() {
+        setIsVisible(previousState => !previousState);
+    }
+
     return (
         <Wrapper>
             <Header
-                colors={['#52E78C', '#1Ab563']}
+                colors={ useBalance 
+                        ?['#52E78C', '#1Ab563']
+                        :['#D3D3D3', '#868686']}
             >
                 <HeaderContainer>
                     <Title>Saldo PicPay</Title>
                     <BalanceContainer>
                         <Value>
-                            R$ <Bold>0,00</Bold>
+                            R$ <Bold>{isVisible ? '0,00':'----'}</Bold>
                         </Value>
-                        <EyeButton>
-                            <Feather name="eye" size={28} color="#FFF" />
+                        <EyeButton onPress={handleBalanceVisibility}>
+                            <Feather name={isVisible ? 'eye':'eye-off'} size={28} color="#FFF" />
                         </EyeButton>
                     </BalanceContainer>
                    
@@ -56,8 +84,41 @@ export default function Home() {
             </Header>
             <UseBalance>
                 <UseBalanceTitle>Usar saldo ao pagar</UseBalanceTitle>
-                <Switch />
+                <Switch onValueChange={handleSwitch} value={useBalance} />
             </UseBalance>
+
+            <PaymentMethods>
+                <PaymentMethodsTitle>
+                    Forma de pagamento
+                </PaymentMethodsTitle>
+
+                <Card>
+                    <CardBody>
+                    <CardDetails>
+                        <CardTitle>
+                            Cadastre seu cartão de crédito
+                        </CardTitle>
+                        <CardInfo>
+                            Cadastre um cartão de crédito para poder fazer pagamentos mesmo quando não tiver saldo no seu PicPay.
+                        </CardInfo>
+                    </CardDetails>
+
+                    <Img resizeMode="contain" source={creditCard}>
+                    </Img>
+                    </CardBody>
+                    
+                    <CardFooter>
+                        <AntDesign name="pluscircleo" size={30} color="#0DB060" />
+                        <CardFooterText>Adicionar cartão de crédito</CardFooterText>
+                    </CardFooter>
+                </Card>
+                <TicketContainer>
+                    <Ticket>
+                        <MaterialCommunityIcons name="ticket-outline" size={20} color="#0DB060" />
+                        <TicketLabel>Usar código promocional</TicketLabel>
+                    </Ticket>
+                </TicketContainer>
+            </PaymentMethods>
         </Wrapper>
     );
 }
