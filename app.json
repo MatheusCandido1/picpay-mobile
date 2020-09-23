@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "picpay-mobile",
+    "name": "PicPay Clone",
     "slug": "picpay-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,6 +18,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.candin.picpay"
     },
     "web": {
       "favicon": "./assets/favicon.png"
